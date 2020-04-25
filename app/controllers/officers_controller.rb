@@ -1,0 +1,4 @@
+class OfficersController < ApplicationController
+ 
+
+end

@@ -1,0 +1,449 @@
+Started GET "/" for ::1 at 2020-04-23 08:51:32 +0300
+
+ActiveRecord::PendingMigrationError - Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+:
+
+Started POST "/__better_errors/fab80575d6c20dcb/variables" for ::1 at 2020-04-23 08:51:32 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ bin/rails:9
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateUnits (20200420174458)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "units" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean DEFAULT 1)[0m
+  ↳ db/migrate/20200420174458_create_units.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174458"]]
+  ↳ bin/rails:9
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateCrimes (20200420174509)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "crimes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "felony" boolean, "active" boolean DEFAULT 1)[0m
+  ↳ db/migrate/20200420174509_create_crimes.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174509"]]
+  ↳ bin/rails:9
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateOfficers (20200420174518)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "officers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "unit_id" integer, "rank" varchar, "ssn" varchar, "role" varchar, "username" varchar, "password_digest" varchar, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_07a4b94120"
+FOREIGN KEY ("unit_id")
+  REFERENCES "units" ("id")
+)[0m
+  ↳ db/migrate/20200420174518_create_officers.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_officers_on_unit_id" ON "officers" ("unit_id")[0m
+  ↳ db/migrate/20200420174518_create_officers.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174518"]]
+  ↳ bin/rails:9
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateInvestigations (20200420174527)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" text, "crime_location" varchar, "date_opened" date, "date_closed" date, "solved" boolean, "batman_involved" boolean)[0m
+  ↳ db/migrate/20200420174527_create_investigations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174527"]]
+  ↳ bin/rails:9
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateCrimeInvestigations (20200420174537)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "crime_investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "crime_id" integer, "investigation_id" integer, CONSTRAINT "fk_rails_eb8b02db24"
+FOREIGN KEY ("crime_id")
+  REFERENCES "crimes" ("id")
+, CONSTRAINT "fk_rails_0ea5d3b977"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+)[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_crime_id" ON "crime_investigations" ("crime_id")[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_investigation_id" ON "crime_investigations" ("investigation_id")[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174537"]]
+  ↳ bin/rails:9
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateAssignments (20200420174550)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "assignments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "start_date" date, "end_date" date, CONSTRAINT "fk_rails_8b422cbcb6"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+, CONSTRAINT "fk_rails_e0b34408db"
+FOREIGN KEY ("officer_id")
+  REFERENCES "officers" ("id")
+)[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_investigation_id" ON "assignments" ("investigation_id")[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_officer_id" ON "assignments" ("officer_id")[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174550"]]
+  ↳ bin/rails:9
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateInvestigationNotes (20200420174613)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "investigation_notes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "content" text, "date" date, CONSTRAINT "fk_rails_de28f22bb6"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+, CONSTRAINT "fk_rails_16390c6c25"
+FOREIGN KEY ("officer_id")
+  REFERENCES "officers" ("id")
+)[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_investigation_id" ON "investigation_notes" ("investigation_id")[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_officer_id" ON "investigation_notes" ("officer_id")[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174613"]]
+  ↳ bin/rails:9
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-04-23 08:51:50.719472"], ["updated_at", "2020-04-23 08:51:50.719472"]]
+  ↳ bin/rails:9
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Started GET "/" for ::1 at 2020-04-23 08:52:00 +0300
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/hbouamor/.rvm/gems/ruby-2.5.7/gems/activerecord-5.2.4.2/lib/active_record/log_subscriber.rb:98
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/hbouamor/.rvm/gems/ruby-2.5.7/gems/railties-5.2.4.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/hbouamor/.rvm/gems/ruby-2.5.7/gems/railties-5.2.4.2/lib/rails/templates/rails/welcome/index.html.erb (4.0ms)
+Completed 200 OK in 31ms (Views: 11.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/crimes" for ::1 at 2020-04-23 08:52:05 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/crimes"):
+  
+actionpack (5.2.4.2) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+rack-contrib (2.2.0) lib/rack/contrib/response_headers.rb:17:in `call'
+meta_request (0.7.2) lib/meta_request/middlewares/headers.rb:16:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.2) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.2) lib/rails/engine.rb:524:in `call'
+puma (3.12.4) lib/puma/configuration.rb:227:in `call'
+puma (3.12.4) lib/puma/server.rb:675:in `handle_request'
+puma (3.12.4) lib/puma/server.rb:476:in `process_client'
+puma (3.12.4) lib/puma/server.rb:334:in `block in run'
+puma (3.12.4) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/owners" for ::1 at 2020-04-23 08:52:26 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/owners"):
+  
+actionpack (5.2.4.2) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+rack-contrib (2.2.0) lib/rack/contrib/response_headers.rb:17:in `call'
+meta_request (0.7.2) lib/meta_request/middlewares/headers.rb:16:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.2) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.2) lib/rails/engine.rb:524:in `call'
+puma (3.12.4) lib/puma/configuration.rb:227:in `call'
+puma (3.12.4) lib/puma/server.rb:675:in `handle_request'
+puma (3.12.4) lib/puma/server.rb:476:in `process_client'
+puma (3.12.4) lib/puma/server.rb:334:in `block in run'
+puma (3.12.4) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/officers" for ::1 at 2020-04-23 08:52:28 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/officers"):
+  
+actionpack (5.2.4.2) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+rack-contrib (2.2.0) lib/rack/contrib/response_headers.rb:17:in `call'
+meta_request (0.7.2) lib/meta_request/middlewares/headers.rb:16:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.4.2) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.4.2) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.4.2) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.2) lib/rack/method_override.rb:24:in `call'
+rack (2.2.2) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.4.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.4.2) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.2.2) lib/rack/sendfile.rb:110:in `call'
+railties (5.2.4.2) lib/rails/engine.rb:524:in `call'
+puma (3.12.4) lib/puma/configuration.rb:227:in `call'
+puma (3.12.4) lib/puma/server.rb:675:in `handle_request'
+puma (3.12.4) lib/puma/server.rb:476:in `process_client'
+puma (3.12.4) lib/puma/server.rb:334:in `block in run'
+puma (3.12.4) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/populate.rake:11
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateUnits (20200420174458)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "units" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean DEFAULT 1)[0m
+  ↳ db/migrate/20200420174458_create_units.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174458"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateCrimes (20200420174509)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "crimes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "felony" boolean, "active" boolean DEFAULT 1)[0m
+  ↳ db/migrate/20200420174509_create_crimes.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174509"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateOfficers (20200420174518)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "officers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "unit_id" integer, "rank" varchar, "ssn" varchar, "role" varchar, "username" varchar, "password_digest" varchar, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_07a4b94120"
+FOREIGN KEY ("unit_id")
+  REFERENCES "units" ("id")
+)[0m
+  ↳ db/migrate/20200420174518_create_officers.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_officers_on_unit_id" ON "officers" ("unit_id")[0m
+  ↳ db/migrate/20200420174518_create_officers.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174518"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateInvestigations (20200420174527)
+  [1m[35m (0.5ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" text, "crime_location" varchar, "date_opened" date, "date_closed" date, "solved" boolean, "batman_involved" boolean)[0m
+  ↳ db/migrate/20200420174527_create_investigations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174527"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (4.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateCrimeInvestigations (20200420174537)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "crime_investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "crime_id" integer, "investigation_id" integer, CONSTRAINT "fk_rails_eb8b02db24"
+FOREIGN KEY ("crime_id")
+  REFERENCES "crimes" ("id")
+, CONSTRAINT "fk_rails_0ea5d3b977"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+)[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_crime_id" ON "crime_investigations" ("crime_id")[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_investigation_id" ON "crime_investigations" ("investigation_id")[0m
+  ↳ db/migrate/20200420174537_create_crime_investigations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174537"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateAssignments (20200420174550)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "assignments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "start_date" date, "end_date" date, CONSTRAINT "fk_rails_8b422cbcb6"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+, CONSTRAINT "fk_rails_e0b34408db"
+FOREIGN KEY ("officer_id")
+  REFERENCES "officers" ("id")
+)[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_investigation_id" ON "assignments" ("investigation_id")[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_officer_id" ON "assignments" ("officer_id")[0m
+  ↳ db/migrate/20200420174550_create_assignments.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174550"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+Migrating to CreateInvestigationNotes (20200420174613)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "investigation_notes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "content" text, "date" date, CONSTRAINT "fk_rails_de28f22bb6"
+FOREIGN KEY ("investigation_id")
+  REFERENCES "investigations" ("id")
+, CONSTRAINT "fk_rails_16390c6c25"
+FOREIGN KEY ("officer_id")
+  REFERENCES "officers" ("id")
+)[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_investigation_id" ON "investigation_notes" ("investigation_id")[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_officer_id" ON "investigation_notes" ("officer_id")[0m
+  ↳ db/migrate/20200420174613_create_investigation_notes.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20200420174613"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-04-25 11:04:42.923712"], ["updated_at", "2020-04-25 11:04:42.923712"]]
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/populate.rake:13
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "assignments"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "assignments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "start_date" date, "end_date" date)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_investigation_id" ON "assignments" ("investigation_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_assignments_on_officer_id" ON "assignments" ("officer_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "crime_investigations"[0m
+  ↳ db/schema.rb:24
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "crime_investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "crime_id" integer, "investigation_id" integer)[0m
+  ↳ db/schema.rb:24
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_crime_id" ON "crime_investigations" ("crime_id")[0m
+  ↳ db/schema.rb:24
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX "index_crime_investigations_on_investigation_id" ON "crime_investigations" ("investigation_id")[0m
+  ↳ db/schema.rb:24
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "crimes"[0m
+  ↳ db/schema.rb:31
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "crimes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "felony" boolean, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:31
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "investigation_notes"[0m
+  ↳ db/schema.rb:37
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "investigation_notes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "investigation_id" integer, "officer_id" integer, "content" text, "date" date)[0m
+  ↳ db/schema.rb:37
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_investigation_id" ON "investigation_notes" ("investigation_id")[0m
+  ↳ db/schema.rb:37
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX "index_investigation_notes_on_officer_id" ON "investigation_notes" ("officer_id")[0m
+  ↳ db/schema.rb:37
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "investigations"[0m
+  ↳ db/schema.rb:46
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "investigations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" text, "crime_location" varchar, "date_opened" date, "date_closed" date, "solved" boolean, "batman_involved" boolean)[0m
+  ↳ db/schema.rb:46
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "officers"[0m
+  ↳ db/schema.rb:56
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "officers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "unit_id" integer, "rank" varchar, "ssn" varchar, "role" varchar, "username" varchar, "password_digest" varchar, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:56
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_officers_on_unit_id" ON "officers" ("unit_id")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "units"[0m
+  ↳ db/schema.rb:69
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "units" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:69
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20200420174613)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20200420174527),
+(20200420174458),
+(20200420174537),
+(20200420174518),
+(20200420174509),
+(20200420174550);
+
+[0m
+  ↳ db/schema.rb:13
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-04-25 11:04:43.033328"], ["updated_at", "2020-04-25 11:04:43.033328"]]
+  ↳ db/schema.rb:13
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ lib/tasks/populate.rake:14
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/populate.rake:14
+  [1m[36mActiveRecord::InternalMetadata Update (0.2ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2020-04-25 11:04:43.042759"], ["key", "environment"]]
+  ↳ lib/tasks/populate.rake:14
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/populate.rake:14
