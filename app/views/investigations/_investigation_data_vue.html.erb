@@ -1,0 +1,56 @@
+<div id="crime_investigation_handling">
+  <%= hidden_field_tag "investigation_id", @investigation.id %>
+  <div class="card">
+    <div class="card-content">
+      <h5>Information for <%= @investigation.title %></h5><br />
+
+      <b>Crimes committed:&nbsp;&nbsp;</b>
+        <ul is='crime-investigation-row' 
+            v-for="crime in crimes" 
+            v-bind:crime="crime"
+            class="no_bullet">  
+        </ul>
+        <br />
+        <% if can? :new, CrimeInvestigation %>
+          <div class="card-action">
+            <div v-if="modal_open">
+              <%= link_to "Cancel crime", "#", {%s(v-on:click) => "switch_modal()"} %>
+            </div>
+            <div v-else>
+              <%= link_to "Add a new crime", "#", {%s(v-on:click) => "switch_modal()"} %>
+            </div>
+          </div>
+        <% end %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# link_to 'Additional crimes', new_crime_investigation_path %>
+        <br /><br />
+
+      <b>Location:&nbsp;&nbsp;</b>
+        <%= @investigation.crime_location %>   
+        <br /><br />
+
+      <b>Description:&nbsp;&nbsp;</b><br />
+        <%= @investigation.description %><br /><br />
+
+      <b>Date opened:&nbsp;&nbsp;</b>
+        <%= @investigation.date_opened.strftime("%B %d, %Y") %><br /><br />
+
+      <% unless @investigation.date_closed.nil? %>
+        <b>Date closed:&nbsp;&nbsp;</b>
+          <%= @investigation.date_closed.strftime("%B %d, %Y") %><br /><br />
+      <% end%>
+
+      <b>Was Batman involved?&nbsp;&nbsp;</b>
+        <%= @investigation.batman_involved ? "Yes" : "No" %><br /><br />
+
+      <b>Case solved?&nbsp;&nbsp;</b>
+        <%= @investigation.solved ? "Yes" : "No" %><br /><br />
+
+    </div>
+  </div>
+</div> 
+
+
+<!--  template here -->
+<script type="text/x-template" id="crime-investigation-form-template">
+  <%= render "crime_investigation_form_template", locals: {case_crimes: @case_crimes, investigation: @investigation, crime_investigation: CrimeInvestigation.new} %>
+</script>

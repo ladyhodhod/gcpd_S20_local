@@ -1,10 +1,8 @@
 class Officer < ApplicationRecord
-  # because officers have to log into the system
   # Modules to extend functionality
   include AppHelpers::Activeable::InstanceMethods
   extend AppHelpers::Activeable::ClassMethods
   include AppHelpers::Validations
-  include OfficerAuthentication
 
   # Relationships
   belongs_to :unit

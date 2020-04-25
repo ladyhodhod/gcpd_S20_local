@@ -1,0 +1,10 @@
+<h5>Investigation Notes</h5>
+<% if @notes.empty? %>
+  <p>No case notes at this time</p>
+<% else %>
+  <% @notes.each do |note| %>
+    <%= render partial: 'note', locals: {note: note} %>
+  <% end %>
+<% end%>
+<br />
+<%= link_to 'Add new note', new_investigation_note_path(investigation_id: @investigation.id) %>

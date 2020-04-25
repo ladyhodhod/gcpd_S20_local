@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-content">
+    <h5>Officer Information for <%= @officer.proper_name %></h5><br />
+
+    <b>Current unit:&nbsp;&nbsp;</b>
+      <%= link_to @officer.unit.name, unit_path(@officer.unit) %>    
+      <br /><br />
+
+    <b>Current rank:&nbsp;&nbsp;</b>
+      <%= @officer.rank %><br /><br />
+
+    <b>SSN:&nbsp;&nbsp;</b>
+      <%= @officer.ssn %><br /><br />
+
+
+    <b>Active duty?&nbsp;&nbsp;</b>
+      <%= @officer.active ? "Yes" : "No" %><br><br><br>
+  </div>
+</div>
