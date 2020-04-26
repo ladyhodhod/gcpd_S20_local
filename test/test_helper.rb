@@ -31,6 +31,15 @@ class ActiveSupport::TestCase
     assert !condition, msg
   end
 
+  Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+        with.test_framework :minitest
+        with.library :rails
+    end
+  do
+
+
+
   # A method to login in an admin (or manager) to start things off
   def login_commish
     @alex = FactoryBot.create(:employee, first_name: "Alex", username: "alex", last_name: "Heimann", role: "admin")
