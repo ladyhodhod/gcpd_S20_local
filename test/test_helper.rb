@@ -40,25 +40,27 @@ class ActiveSupport::TestCase
 
 
 
-  # A method to login in an admin (or manager) to start things off
-  def login_commish
-    @alex = FactoryBot.create(:employee, first_name: "Alex", username: "alex", last_name: "Heimann", role: "admin")
+   # Methods to login in an officer of different ranks to start things off
+   def login_commish
+    @hq = FactoryBot.create(:unit, name: "Headquarters")
+    @jgordon = FactoryBot.create(:officer, unit: @hq, first_name: "Jim", last_name: "Gordon", username: "jgordon", role: "commish")
     get login_path
-    post sessions_path, params: { username: "alex", password: "secret" }
+    post sessions_path, params: { username: "jgordon", password: "secret" }
   end
 
   def login_chief
-    @ben = FactoryBot.create(:employee, first_name: "Ben", last_name: "Sisko", username: "ben", role: "manager")
+    @homicide = FactoryBot.create(:unit, name: "Homicide")
+    @msawyer  = FactoryBot.create(:officer, unit: @homicide, first_name: "Maggie", last_name: "Sawyer", username: "msawyer", role: "chief")
     get login_path
-    post sessions_path, params: { username: "ben", password: "secret" }
+    post sessions_path, params: { username: "msawyer", password: "secret" }
   end
 
   def login_officer
-    @ben = FactoryBot.create(:employee, first_name: "Ben", last_name: "Sisko", username: "ben", role: "manager")
+    @homicide = FactoryBot.create(:unit, name: "Homicide")
+    @jblake   = FactoryBot.create(:officer, unit: @homicide, first_name: "John", last_name: "Blake", username: "jblake", role: "officer")
     get login_path
-    post sessions_path, params: { username: "ben", password: "secret" }
+    post sessions_path, params: { username: "jblake", password: "secret" }
   end
-
   # Spruce up minitest results...
   Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
 
