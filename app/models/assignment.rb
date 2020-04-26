@@ -24,6 +24,14 @@ class Assignment < ApplicationRecord
   # Callback - to prevent deletions
   before_destroy -> { cannot_destroy_object() }
 
+  # Other methods
+  def terminate
+    return false unless self.end_date.nil?
+    self.end_date = Date.current
+    self.save
+    self.reload
+  end
+
   private
     def assignment_is_not_a_duplicate
       if assignment_exists? && assignment_is_current?
